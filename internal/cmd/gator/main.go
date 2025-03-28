@@ -1,11 +1,14 @@
 package gator
 
 import (
+	"database/sql"
 	"log"
 	"os"
 
+	_ "github.com/lib/pq"
 	"github.com/sonnq2010/blog-aggregator/internal/command"
 	"github.com/sonnq2010/blog-aggregator/internal/config"
+	"github.com/sonnq2010/blog-aggregator/internal/database"
 	"github.com/sonnq2010/blog-aggregator/internal/handler"
 	"github.com/sonnq2010/blog-aggregator/internal/state"
 )
@@ -24,6 +27,14 @@ func Run() {
 	state := &state.State{
 		Config: &cfg,
 	}
+
+	db, err := sql.Open("postgres", cfg.DBUrl)
+	if err != nil {
+		log.Fatalf("error opening db: %v", err)
+	}
+
+	dbQueries := database.New(db)
+	state.DB = dbQueries
 
 	args := os.Args
 	if len(args) < 2 {
