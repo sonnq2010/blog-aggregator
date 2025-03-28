@@ -20,6 +20,7 @@ func Run() {
 	commands.Register("login", handler.LoginHandler)
 	commands.Register("register", handler.RegisterHandler)
 	commands.Register("reset", handler.ResetHandler)
+	commands.Register("users", handler.UsersHandler)
 
 	cfg, err := config.Read()
 	if err != nil {
