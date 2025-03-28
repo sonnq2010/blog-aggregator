@@ -24,3 +24,16 @@ help:
 	@echo "  make up       - Start all services in detached mode"
 	@echo "  make down     - Stop and remove containers and networks"
 	
+DB_URL ?= "postgres://postgres:postgres@localhost:5432/gator"
+
+.PHONY: migrate-up
+migrate-up:
+	cd sql/schema && goose postgres $(DB_URL) up && cd ../..
+
+.PHONY: migrate-down
+migrate-down:
+	cd sql/schema && goose postgres $(DB_URL) down && cd ../..
+
+.PHONY: clean
+clean:
+	cd sql/schema && goose postgres $(DB_URL) down && goose postgres $(DB_URL) up && cd ../..

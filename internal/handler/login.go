@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"errors"
 	"fmt"
 
@@ -18,8 +19,11 @@ func LoginHandler(s *state.State, c command.Command) error {
 		return errors.New("invalid username")
 	}
 
-	err := s.Config.SetUser(username)
-	if err != nil {
+	if _, err := s.DB.GetUser(context.Background(), username); err != nil {
+		return err
+	}
+
+	if err := s.Config.SetUser(username); err != nil {
 		return err
 	}
 
