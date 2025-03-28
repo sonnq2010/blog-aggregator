@@ -18,6 +18,7 @@ func Run() {
 		Handlers: make(map[string]func(*state.State, command.Command) error),
 	}
 	commands.Register("login", handler.LoginHandler)
+	commands.Register("register", handler.RegisterHandler)
 
 	cfg, err := config.Read()
 	if err != nil {
