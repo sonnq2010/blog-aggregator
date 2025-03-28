@@ -25,7 +25,7 @@ func RegisterHandler(s *state.State, c command.Command) error {
 	user, err := s.DB.CreateUser(
 		context.Background(),
 		database.CreateUserParams{
-			ID:        uuid.UUID{},
+			ID:        uuid.New(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 			Name:      username,
