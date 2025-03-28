@@ -37,3 +37,7 @@ migrate-down:
 .PHONY: clean
 clean:
 	cd sql/schema && goose postgres $(DB_URL) down && goose postgres $(DB_URL) up && cd ../..
+
+.PHONY: generate
+generate:
+	sqlc generate
